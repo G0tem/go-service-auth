@@ -1,0 +1,21 @@
+name: Deploy Test App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Update app service
+        uses: appleboy/ssh-action@master
+        with:
+          script: "cd /opt/marketplaces/marketplace-analytics-auth && make stop && git pull origin main && make run"
+          host: ${{ secrets.SSH_HOST }}
+          username: root
+          key: ${{ secrets.SSH_KEY }}
