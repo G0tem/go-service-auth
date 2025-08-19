@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Capstane/authlib/fiberx"
-	"github.com/Capstane/authlib/typex"
 	"github.com/G0tem/go-servise-auth/internal"
 	"github.com/G0tem/go-servise-auth/internal/model"
 	"github.com/G0tem/go-servise-auth/internal/types"
@@ -216,7 +214,7 @@ func (h *Handler) passwordChange(c *fiber.Ctx) error {
 		})
 	}
 
-	claims := c.Locals("claims").(*typex.JwtClaims)
+	claims := c.Locals("claims").(*types.JwtClaims)
 
 	tx := h.db.Where("email = ?", claims.Email).First(&user)
 	if err := tx.Error; err != nil {
@@ -421,13 +419,9 @@ func (h *Handler) passwordResetConfirm(c *fiber.Ctx) error {
 		})
 	}
 
-	claims, err := typex.ParseJwtClaims(jwtToken.Claims.(jwt.MapClaims))
-	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(types.FailureErrorResponse{
-			Status:  "error",
-			Message: "Internal server error (parse jwt claims fail)",
-			Error:   err.Error(),
-		})
+	claimsMap := jwtToken.Claims.(jwt.MapClaims)
+	claims := &types.JwtClaims{
+		Email: fmt.Sprint(claimsMap["email"]),
 	}
 
 	tx := h.db.Where("email = ?", claims.Email).First(&user)
@@ -460,7 +454,7 @@ func (h *Handler) passwordResetConfirm(c *fiber.Ctx) error {
 
 	log.Info().Msgf("Sending notification to user service about password change with new password")
 	// Notify external service about password change with new password
-	h.userService.OnUpdateUser(&fiberx.UserCredentials{
+	h.userService.OnUpdateUser(&UserCredentials{
 		Email:    user.Email,
 		Password: input.NewPassword,
 	})
@@ -513,7 +507,7 @@ func (h *Handler) emailConfirmFromExternalLink(c *fiber.Ctx) error {
 		log.Error().Msgf("Error retrieving password from Redis: %v", err)
 		return c.Redirect(h.GetPublicErrorUrl())
 	}
-	h.userService.OnCreateUser(&fiberx.UserCredentials{
+	h.userService.OnCreateUser(&UserCredentials{
 		Email:    confirmation.User.Email,
 		Password: password,
 	})
@@ -597,7 +591,7 @@ func (h *Handler) emailResendConfirm(c *fiber.Ctx) error {
 func (h *Handler) getMe(c *fiber.Ctx) error {
 	var user model.User
 
-	claims := c.Locals("claims").(*typex.JwtClaims)
+	claims := c.Locals("claims").(*types.JwtClaims)
 	log.Debug().
 		Str("email", claims.Email).
 		Time("exp", claims.Exp).
