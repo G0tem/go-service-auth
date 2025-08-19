@@ -6,7 +6,6 @@ import (
 	"log"
 	"time"
 
-	"github.com/Capstane/authlib/fiberx"
 	"github.com/G0tem/go-servise-auth/internal"
 	"github.com/G0tem/go-servise-auth/internal/config"
 	"github.com/G0tem/go-servise-auth/internal/handler/rbac"
@@ -14,7 +13,7 @@ import (
 	"github.com/G0tem/go-servise-auth/internal/queue"
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
-	"github.com/golang-jwt/jwt/v4"
+	"github.com/golang-jwt/jwt/v5"
 	fiberSwagger "github.com/swaggo/fiber-swagger"
 	"gorm.io/gorm"
 )
@@ -24,7 +23,7 @@ type Handler struct {
 	db          *gorm.DB
 	qConn       *queue.MailQueueConnector
 	cfg         *config.Config
-	userService *fiberx.UserServiceClient
+	userService UserService
 	redis       *redis.Client
 }
 
@@ -40,9 +39,7 @@ func NewHandler(db *gorm.DB, qConn *queue.MailQueueConnector, rbac *rbac.RBACLay
 		db:    db,
 		qConn: qConn,
 		cfg:   cfg,
-		userService: fiberx.NewUserServiceClient(&fiberx.UserServiceConfig{
-			UserServiceBaseUrl: cfg.UserServiceBaseUrl,
-		}),
+		userService: NewHTTPUserService(cfg.UserServiceBaseUrl),
 		redis: redisClient,
 	}
 }
@@ -67,9 +64,7 @@ func (h *Handler) SetupRoutes(app *fiber.App) {
 
 	// Защищенные маршруты - с middleware JWT
 	authProtected := auth.Group("/")
-	authProtected.Use(fiberx.New(fiberx.Config{
-		SecretKey: cfg.SecretKey,
-	}))
+	authProtected.Use(JWTMiddleware(cfg.SecretKey))
 	authProtected.Get("get-me", h.getMe)
 	authProtected.Post("password/change", h.passwordChange)
 	authProtected.Post("refresh", h.refresh)
