@@ -27,7 +27,7 @@ go.work.sum
 # env file
 .env
 
-.nenrc
+.netrc
 # Editor/IDE
 # .idea/
 # .vscode/

@@ -12,7 +12,7 @@ COPY go.sum go.sum
 COPY main.go main.go
 
 ENV GO111MODULE=on
-ENV GOPRIVATE=github.com/Capstane
+ENV GOPRIVATE=github.com/G0tem
 
 ARG GITHUB_TOKEN
 RUN if [ "x$GITHUB_TOKEN" == "x" ]; then \
