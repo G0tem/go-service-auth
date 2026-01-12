@@ -6,7 +6,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This is an API of auth-service",
-        "title": "Local-Template-auth Swagger",
+        "title": "Local-Template-Auth Swagger",
         "contact": {},
         "version": "1.0"
     },

@@ -571,7 +571,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "/api/v1",
 	Schemes:          []string{"http", "https"},
-	Title:            "Local-Template-auth Swagger",
+	Title:            "Local-Template-Auth Swagger",
 	Description:      "This is an API of auth-service",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

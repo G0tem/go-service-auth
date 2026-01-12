@@ -22,7 +22,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-// @title Local-Template-auth Swagger
+// @title Local-Template-Auth Swagger
 // @version 1.0
 // @description This is an API of auth-service
 // @schemes http https
