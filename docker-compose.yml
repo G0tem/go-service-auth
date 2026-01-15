@@ -12,6 +12,7 @@ services:
       - go-servise-base_local-network
     ports:
       - "${HTTP_PORT:-8002}:${HTTP_PORT:-8002}"
+      - "${GRPC_PORT:-50051}:${GRPC_PORT:-50051}"
     labels:
       - 'traefik.enable=true'
       # Router rule

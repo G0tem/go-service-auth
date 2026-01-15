@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "github.com/G0tem/go-servise-auth/proto";
+
+// AuthService предоставляет методы для работы с авторизацией
+service AuthService {
+  // GetTestData возвращает тестовые данные для проверки gRPC запроса
+  rpc GetTestData(GetTestDataRequest) returns (GetTestDataResponse);
+  
+  // GetUserInfo возвращает информацию о пользователе по ID
+  rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
+}
+
+// GetTestDataRequest - запрос для получения тестовых данных
+message GetTestDataRequest {
+  string message = 1;
+}
+
+// GetTestDataResponse - ответ с тестовыми данными
+message GetTestDataResponse {
+  string message = 1;
+  int32 status = 2;
+  string timestamp = 3;
+}
+
+// GetUserInfoRequest - запрос информации о пользователе
+message GetUserInfoRequest {
+  string user_id = 1;
+}
+
+// GetUserInfoResponse - ответ с информацией о пользователе
+message GetUserInfoResponse {
+  string user_id = 1;
+  string email = 2;
+  string username = 3;
+  bool is_active = 4;
+}

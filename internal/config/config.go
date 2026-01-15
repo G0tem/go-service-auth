@@ -14,6 +14,7 @@ import (
 type Config struct {
 	LogLevel                           int      `default:"4" envconfig:"LOG_LEVEL"`
 	HttpPort                           uint16   `default:"8002" envconfig:"HTTP_PORT"`
+	GrpcPort                           uint16   `default:"50051" envconfig:"GRPC_PORT"`
 	UserServiceBaseUrl                 string   `binding:"required" envconfig:"USER_SERVICE_BASE_URL"`
 	CorsOrigins                        []string `binding:"required" envconfig:"CORS_ORIGINS"`
 	SecretKey                          string   `binding:"required" envconfig:"SECRET_KEY"`
@@ -69,6 +70,7 @@ func LoadConfig() Config {
 	return Config{
 		LogLevel:                           logLevel,
 		HttpPort:                           internal.ParseUint16(os.Getenv("HTTP_PORT"), 8002),
+		GrpcPort:                           internal.ParseUint16(os.Getenv("GRPC_PORT"), 50051),
 		UserServiceBaseUrl:                 getenvDef("USER_SERVICE_BASE_URL", "http://31.131.255.218:8080/api"),
 		CorsOrigins:                        strings.Split(os.Getenv("CORS_ORIGINS"), ","),
 		SecretKey:                          os.Getenv("SECRET_KEY"),

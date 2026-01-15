@@ -1,8 +1,10 @@
-.PHONY: up down rebuild swag test migrate-up migrate-down install-deps logs logs-app logs-db test-db-create test-db-drop test-db-recreate
+.PHONY: up down rebuild swag test migrate-up migrate-down install-deps logs logs-app logs-db test-db-create test-db-drop test-db-recreate proto
 
 # Установка зависимостей
 install-deps:
 	go install github.com/swaggo/swag/cmd/swag@latest
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
 # Запуск приложения
 run:
@@ -21,6 +23,12 @@ rerun:
 # Генерация Swagger документации
 swag:
 	~/go/bin/swag init -g main.go
+
+# Генерация gRPC кода из proto файлов
+proto:
+	protoc --go_out=. --go_opt=paths=source_relative \
+		--go-grpc_out=. --go-grpc_opt=paths=source_relative \
+		proto/auth.proto
 
 # Запуск тестов
 test: test-db-recreate
