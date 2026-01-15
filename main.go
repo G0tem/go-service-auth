@@ -8,6 +8,7 @@ import (
 	_ "github.com/G0tem/go-servise-auth/docs" // swagger docs
 	"github.com/G0tem/go-servise-auth/internal/config"
 	"github.com/G0tem/go-servise-auth/internal/database"
+	grpcServer "github.com/G0tem/go-servise-auth/internal/grpc"
 	"github.com/G0tem/go-servise-auth/internal/handler"
 	"github.com/G0tem/go-servise-auth/internal/handler/rbac"
 	"github.com/G0tem/go-servise-auth/internal/model"
@@ -108,6 +109,13 @@ func main() {
 	app.Use(func(c *fiber.Ctx) error {
 		return c.SendStatus(404) // => 404 "Not Found"
 	})
+
+	// Запускаем gRPC сервер в отдельной горутине
+	go func() {
+		if err := grpcServer.StartGrpcServer(&cfg); err != nil {
+			log.Error().Msgf("gRPC server error: %v", err)
+		}
+	}()
 
 	err = app.Listen(fmt.Sprintf(":%v", cfg.HttpPort))
 	if err != nil {

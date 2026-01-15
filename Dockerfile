@@ -1,5 +1,5 @@
 # First stage - build
-FROM golang:1.22 AS build
+FROM golang:1.24.0 AS build
 
 # `boilerplate` should be replaced with your project name
 WORKDIR /go/src/server
@@ -7,6 +7,7 @@ WORKDIR /go/src/server
 # Copy all the Code and stuff to compile everything
 COPY docs docs
 COPY internal internal
+COPY proto proto
 COPY go.mod go.mod
 COPY go.sum go.sum
 COPY main.go main.go

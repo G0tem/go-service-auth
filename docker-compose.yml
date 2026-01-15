@@ -12,11 +12,14 @@ services:
       - go-servise-base_local-network
     ports:
       - "${HTTP_PORT:-8002}:${HTTP_PORT:-8002}"
+      - "${GRPC_PORT:-50051}:${GRPC_PORT:-50051}"
     labels:
-      - "a=localExample"
-      - "traefik.enable=true"
+      - 'traefik.enable=true'
+      # Router rule
       - "traefik.http.routers.auth.rule=PathPrefix(`/api/v1/auth`)"
       - "traefik.http.routers.auth.entrypoints=web"
+      # Port внутри контейнера
+      - "traefik.http.services.auth.loadbalancer.server.port=8002"
 
 networks:
   go-servise-base_local-network:
