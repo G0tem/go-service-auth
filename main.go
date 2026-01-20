@@ -12,7 +12,6 @@ import (
 	"github.com/G0tem/go-servise-auth/internal/handler"
 	"github.com/G0tem/go-servise-auth/internal/handler/rbac"
 	"github.com/G0tem/go-servise-auth/internal/model"
-	"github.com/G0tem/go-servise-auth/internal/queue"
 	"github.com/G0tem/go-servise-auth/internal/router"
 	"github.com/gofiber/contrib/fiberzerolog"
 	"github.com/gofiber/contrib/swagger"
@@ -101,7 +100,7 @@ func main() {
 		return
 	}
 
-	handlers := handler.NewHandler(db, queue.NewMailQueueConnector(&cfg), rbac, &cfg)
+	handlers := handler.NewHandler(db, rbac, &cfg)
 
 	router.SetupRoutes(app)
 	handlers.SetupRoutes(app)

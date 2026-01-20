@@ -51,20 +51,6 @@ definitions:
       old_password:
         type: string
     type: object
-  types.PasswordChangeResetConfirmRequest:
-    properties:
-      new_password:
-        type: string
-      new_password_confirm:
-        type: string
-      token:
-        type: string
-    type: object
-  types.PasswordChangeResetRequest:
-    properties:
-      email:
-        type: string
-    type: object
   types.RegisterRequest:
     properties:
       confirmPassword:
@@ -74,11 +60,6 @@ definitions:
       password:
         type: string
       username:
-        type: string
-    type: object
-  types.ResendEmailConfirmationRequest:
-    properties:
-      email:
         type: string
     type: object
   types.SuccessResponse:
@@ -94,36 +75,6 @@ info:
   title: Local-Template-Auth Swagger
   version: "1.0"
 paths:
-  /auth/email/confirm:
-    get:
-      description: Email confirm via emailed link
-      parameters:
-      - description: string valid
-        in: query
-        maxLength: 100
-        minLength: 100
-        name: string
-        type: string
-        x-abc: def
-        x-nullable: true
-      produces:
-      - application/json
-      responses:
-        "302":
-          description: Found
-          schema:
-            $ref: '#/definitions/types.SuccessResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/types.FailureResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/types.FailureErrorResponse'
-      summary: Email Confirm
-      tags:
-      - auth
   /auth/get-me:
     get:
       description: Get current user ID and email
@@ -209,66 +160,6 @@ paths:
       summary: Password Change
       tags:
       - auth
-  /auth/password/reset:
-    post:
-      consumes:
-      - application/json
-      description: Send link to email for reset password
-      parameters:
-      - description: password reset
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/types.PasswordChangeResetRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/types.SuccessResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/types.FailureResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/types.FailureErrorResponse'
-      summary: Password Reset
-      tags:
-      - auth
-  /auth/password/reset/confirm:
-    post:
-      consumes:
-      - application/json
-      description: Password Reset Confirm
-      parameters:
-      - description: password reset confirm
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/types.PasswordChangeResetConfirmRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/types.SuccessResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/types.FailureResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/types.FailureErrorResponse'
-      summary: Password Reset Confirm
-      tags:
-      - auth
   /auth/refresh:
     post:
       description: Refresh jwt token
@@ -320,36 +211,6 @@ paths:
           schema:
             $ref: '#/definitions/types.FailureErrorResponse'
       summary: Register
-      tags:
-      - auth
-  /auth/register/resend-confirm-email:
-    post:
-      consumes:
-      - application/json
-      description: Send email message with email confirmation link
-      parameters:
-      - description: email resend confirm
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/types.ResendEmailConfirmationRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/types.SuccessResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/types.FailureResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/types.FailureErrorResponse'
-      summary: Email Resend Confirm
       tags:
       - auth
 schemes:

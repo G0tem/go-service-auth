@@ -12,50 +12,6 @@
     },
     "basePath": "/api/v1",
     "paths": {
-        "/auth/email/confirm": {
-            "get": {
-                "description": "Email confirm via emailed link",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "auth"
-                ],
-                "summary": "Email Confirm",
-                "parameters": [
-                    {
-                        "maxLength": 100,
-                        "minLength": 100,
-                        "type": "string",
-                        "x-abc": "def",
-                        "x-nullable": true,
-                        "description": "string valid",
-                        "name": "string",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "302": {
-                        "description": "Found",
-                        "schema": {
-                            "$ref": "#/definitions/types.SuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/types.FailureResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/types.FailureErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/auth/get-me": {
             "get": {
                 "security": [
@@ -190,98 +146,6 @@
                 }
             }
         },
-        "/auth/password/reset": {
-            "post": {
-                "description": "Send link to email for reset password",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "auth"
-                ],
-                "summary": "Password Reset",
-                "parameters": [
-                    {
-                        "description": "password reset",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/types.PasswordChangeResetRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/types.SuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/types.FailureResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/types.FailureErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/auth/password/reset/confirm": {
-            "post": {
-                "description": "Password Reset Confirm",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "auth"
-                ],
-                "summary": "Password Reset Confirm",
-                "parameters": [
-                    {
-                        "description": "password reset confirm",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/types.PasswordChangeResetConfirmRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/types.SuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/types.FailureResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/types.FailureErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
         "/auth/refresh": {
             "post": {
                 "security": [
@@ -348,52 +212,6 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/types.LoginSuccessResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/types.FailureResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/types.FailureErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/auth/register/resend-confirm-email": {
-            "post": {
-                "description": "Send email message with email confirmation link",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "auth"
-                ],
-                "summary": "Email Resend Confirm",
-                "parameters": [
-                    {
-                        "description": "email resend confirm",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/types.ResendEmailConfirmationRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/types.SuccessResponse"
                         }
                     },
                     "400": {
@@ -493,28 +311,6 @@
                 }
             }
         },
-        "types.PasswordChangeResetConfirmRequest": {
-            "type": "object",
-            "properties": {
-                "new_password": {
-                    "type": "string"
-                },
-                "new_password_confirm": {
-                    "type": "string"
-                },
-                "token": {
-                    "type": "string"
-                }
-            }
-        },
-        "types.PasswordChangeResetRequest": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                }
-            }
-        },
         "types.RegisterRequest": {
             "type": "object",
             "properties": {
@@ -528,14 +324,6 @@
                     "type": "string"
                 },
                 "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "types.ResendEmailConfirmationRequest": {
-            "type": "object",
-            "properties": {
-                "email": {
                     "type": "string"
                 }
             }
