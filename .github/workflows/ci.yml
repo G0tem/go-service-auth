@@ -1,0 +1,35 @@
+name: Deploy App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check required secrets for main
+        if: github.ref_name == 'main'
+        run: |
+          if [ -z "${{ secrets.SSH_HOST }}" ] || [ -z "${{ secrets.SSH_KEY }}" ]; then
+            echo "Error: Required secrets (SSH_HOST, SSH_KEY) are not set for main"
+            exit 1
+          fi
+
+      - name: Deploy to production (main)
+        if: github.ref_name == 'main'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: user1
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            set -e
+            cd /opt/local/go-servise-auth
+            docker compose down
+            git pull origin main
+            docker compose up --build -d
