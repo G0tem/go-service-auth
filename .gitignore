@@ -29,5 +29,5 @@ go.work.sum
 
 .netrc
 # Editor/IDE
-# .idea/
-# .vscode/
+.idea/
+.vscode/

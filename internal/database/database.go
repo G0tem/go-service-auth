@@ -52,19 +52,10 @@ func Connect(cfg config.Config) (*gorm.DB, error) {
 		&model.UserRole{},
 		&model.UserPermission{},
 		&model.UserRolePermission{},
-		&model.EmailTemplate{},
-		&model.EmailConfirmation{},
-		&model.UserMarketplaceSettings{},
 	)
 	if err != nil {
 		log.Error().Msgf("failed run auto-migrations. %v\n", err)
 		return nil, err
-	}
-	// Apply custom migrations (should be idempotent)
-	tx := db.Exec((*model.EmailConfirmation).AfterInsertTrigger(nil))
-	if tx.Error != nil {
-		log.Error().Msgf("failed run custom migrations for model.EmailConfirmation. %v\n", err)
-		return nil, tx.Error
 	}
 
 	// Apply connection pool settings

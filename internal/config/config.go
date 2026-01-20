@@ -71,7 +71,7 @@ func LoadConfig() Config {
 		LogLevel:                           logLevel,
 		HttpPort:                           internal.ParseUint16(os.Getenv("HTTP_PORT"), 8002),
 		GrpcPort:                           internal.ParseUint16(os.Getenv("GRPC_PORT"), 50051),
-		UserServiceBaseUrl:                 getenvDef("USER_SERVICE_BASE_URL", "http://31.131.255.218:8080/api"),
+		UserServiceBaseUrl:                 getenvDef("USER_SERVICE_BASE_URL", "http://127.0.0.1:8002/api"),
 		CorsOrigins:                        strings.Split(os.Getenv("CORS_ORIGINS"), ","),
 		SecretKey:                          os.Getenv("SECRET_KEY"),
 		PublicEmailConfirmationUrl:         os.Getenv("PUBLIC_EMAIL_CONFIRMATION_URL"),
