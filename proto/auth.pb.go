@@ -7,11 +7,12 @@
 package proto
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -261,7 +262,7 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\tis_active\x18\x04 \x01(\bR\bisActive2\x95\x01\n" +
 	"\vAuthService\x12B\n" +
 	"\vGetTestData\x12\x18.auth.GetTestDataRequest\x1a\x19.auth.GetTestDataResponse\x12B\n" +
-	"\vGetUserInfo\x12\x18.auth.GetUserInfoRequest\x1a\x19.auth.GetUserInfoResponseB(Z&github.com/G0tem/go-servise-auth/protob\x06proto3"
+	"\vGetUserInfo\x12\x18.auth.GetUserInfoRequest\x1a\x19.auth.GetUserInfoResponseB(Z&github.com/G0tem/go-service-auth/protob\x06proto3"
 
 var (
 	file_proto_auth_proto_rawDescOnce sync.Once

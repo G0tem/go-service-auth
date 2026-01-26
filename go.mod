@@ -1,4 +1,4 @@
-module github.com/G0tem/go-servise-auth
+module github.com/G0tem/go-service-auth
 
 go 1.24.0
 

@@ -7,9 +7,9 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/G0tem/go-servise-auth/internal"
-	"github.com/G0tem/go-servise-auth/internal/model"
-	"github.com/G0tem/go-servise-auth/internal/types"
+	"github.com/G0tem/go-service-auth/internal"
+	"github.com/G0tem/go-service-auth/internal/model"
+	"github.com/G0tem/go-service-auth/internal/types"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	"github.com/rs/zerolog/log"

@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/G0tem/go-servise-auth/internal/types"
+	"github.com/G0tem/go-service-auth/internal/types"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -95,4 +95,3 @@ func asStringSlice(v any) []string {
 	}
 	return nil
 }
-

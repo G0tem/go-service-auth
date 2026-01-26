@@ -3,7 +3,7 @@ package tests
 import (
 	"fmt"
 
-	"github.com/G0tem/go-servise-auth/internal/config"
+	"github.com/G0tem/go-service-auth/internal/config"
 )
 
 func GetTestConfig() *config.Config {

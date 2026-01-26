@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/G0tem/go-servise-auth/internal/model"
-	"github.com/G0tem/go-servise-auth/internal/types"
+	"github.com/G0tem/go-service-auth/internal/model"
+	"github.com/G0tem/go-service-auth/internal/types"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
