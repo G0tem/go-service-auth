@@ -6,8 +6,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/G0tem/go-servise-auth/internal/config"
-	"github.com/G0tem/go-servise-auth/proto"
+	"github.com/G0tem/go-service-auth/internal/config"
+	"github.com/G0tem/go-service-auth/proto"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 )

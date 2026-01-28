@@ -29,7 +29,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             set -e
-            cd /opt/local/go-servise-auth
+            cd /opt/local/go-service-auth
             docker compose down
             git pull origin main
             docker compose up --build -d

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/G0tem/go-servise-auth/internal"
+	"github.com/G0tem/go-service-auth/internal"
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog/log"
 )

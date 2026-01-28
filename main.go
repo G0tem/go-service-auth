@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"os"
 
-	_ "github.com/G0tem/go-servise-auth/docs" // swagger docs
-	"github.com/G0tem/go-servise-auth/internal/config"
-	"github.com/G0tem/go-servise-auth/internal/database"
-	grpcServer "github.com/G0tem/go-servise-auth/internal/grpc"
-	"github.com/G0tem/go-servise-auth/internal/handler"
-	"github.com/G0tem/go-servise-auth/internal/handler/rbac"
-	"github.com/G0tem/go-servise-auth/internal/model"
-	"github.com/G0tem/go-servise-auth/internal/router"
+	_ "github.com/G0tem/go-service-auth/docs" // swagger docs
+	"github.com/G0tem/go-service-auth/internal/config"
+	"github.com/G0tem/go-service-auth/internal/database"
+	grpcServer "github.com/G0tem/go-service-auth/internal/grpc"
+	"github.com/G0tem/go-service-auth/internal/handler"
+	"github.com/G0tem/go-service-auth/internal/handler/rbac"
+	"github.com/G0tem/go-service-auth/internal/model"
+	"github.com/G0tem/go-service-auth/internal/router"
 	"github.com/gofiber/contrib/fiberzerolog"
 	"github.com/gofiber/contrib/swagger"
 	"github.com/gofiber/fiber/v2"

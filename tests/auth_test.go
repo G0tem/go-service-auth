@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 
-	"github.com/G0tem/go-servise-auth/internal/config"
+	"github.com/G0tem/go-service-auth/internal/config"
 )
 
 func failOnError(t *testing.T, err error, msg string) {

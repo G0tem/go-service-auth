@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/G0tem/go-servise-auth/internal/model"
-	"github.com/G0tem/go-servise-auth/internal/types"
+	"github.com/G0tem/go-service-auth/internal/model"
+	"github.com/G0tem/go-service-auth/internal/types"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
@@ -207,7 +207,7 @@ func (h *Handler) passwordChange(c *fiber.Ctx) error {
 		})
 	}
 
-	claims := c.Locals("claims").(*types.JwtClaims)
+	claims := c.Locals("claims").(*JwtClaims)
 
 	tx := h.db.Where("email = ?", claims.Email).First(&user)
 	if err := tx.Error; err != nil {
@@ -324,7 +324,7 @@ func (h *Handler) refresh(c *fiber.Ctx) error {
 func (h *Handler) getMe(c *fiber.Ctx) error {
 	var user model.User
 
-	claims := c.Locals("claims").(*types.JwtClaims)
+	claims := c.Locals("claims").(*JwtClaims)
 	log.Debug().
 		Str("email", claims.Email).
 		Time("exp", claims.Exp).

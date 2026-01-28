@@ -8,7 +8,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
-	"github.com/G0tem/go-servise-auth/internal/model"
+	"github.com/G0tem/go-service-auth/internal/model"
 )
 
 // CheckPasswordHash compare password with hash

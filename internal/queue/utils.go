@@ -14,7 +14,7 @@ func autocreateExchange(conn *amqp.Connection, exchangeName string) error {
 
 	err = ch.ExchangeDeclare(
 		exchangeName, // name
-		"fanout",     // type
+		"direct",     // type
 		true,         // durable
 		false,        // auto-deleted
 		false,        // internal

@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/G0tem/go-servise-auth/internal"
-	"github.com/G0tem/go-servise-auth/internal/config"
-	"github.com/G0tem/go-servise-auth/internal/model"
+	"github.com/G0tem/go-service-auth/internal"
+	"github.com/G0tem/go-service-auth/internal/config"
+	"github.com/G0tem/go-service-auth/internal/model"
 	"github.com/rs/zerolog/log"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
