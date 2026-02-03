@@ -4,10 +4,20 @@ import (
 	"strings"
 	"time"
 
-	"github.com/G0tem/go-service-auth/internal/types"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 )
+
+// JwtClaims represents minimal set of fields extracted from JWT token
+// and propagated through Fiber context.
+type JwtClaims struct {
+	UserID      string    `json:"user_id"`
+	Username    string    `json:"username"`
+	Email       string    `json:"email"`
+	Role        string    `json:"role"`
+	Permissions []string  `json:"permissions"`
+	Exp         time.Time `json:"exp"`
+}
 
 // JWTMiddleware validates Authorization: Bearer <token>, parses claims,
 // and stores them in fiber context under key "claims".
@@ -55,7 +65,7 @@ func JWTMiddleware(secret string) fiber.Handler {
 			expTime = time.Unix(int64(exp), 0)
 		}
 
-		claims := &types.JwtClaims{
+		claims := &JwtClaims{
 			UserID:      asString(claimsMap["user_id"]),
 			Username:    asString(claimsMap["username"]),
 			Email:       asString(claimsMap["email"]),
