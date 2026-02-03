@@ -7,8 +7,6 @@ import (
 	"time"
 
 	"github.com/G0tem/go-service-auth/internal"
-	"github.com/joho/godotenv"
-	"github.com/rs/zerolog/log"
 )
 
 type Config struct {
@@ -60,11 +58,6 @@ func getenvDef(key, def string) string {
 }
 
 func LoadConfig() Config {
-	err := godotenv.Load()
-	if err != nil {
-		log.Debug().Msg("use process environment variables (i.e. not from .env)")
-	}
-
 	logLevel, _ := strconv.Atoi(os.Getenv("LOG_LEVEL"))
 
 	return Config{
