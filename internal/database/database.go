@@ -10,28 +10,22 @@ import (
 	"github.com/rs/zerolog/log"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 )
 
 // Connect function
 func Connect(cfg config.Config) (*gorm.DB, error) {
-	postgresPort := cfg.PostgresPort
-	// because our config function returns a string, we are parsing our      str to int here
-	port := internal.ParseInt(postgresPort, 5432)
-
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=UTC",
 		cfg.PostgresHost,
 		cfg.PostgresUser,
 		cfg.PostgresPassword,
 		cfg.PostgresDb,
-		port,
+		internal.ParseInt(cfg.PostgresPort, 5432),
 	)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
-		// Logger: logger.Default.LogMode(logger.Info),
-		Logger: &internal.GormZeroLogAdapter{
-			Level: cfg.LogLevel,
-		},
+		Logger: logger.Default.LogMode(logger.Info),
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix:   "",                                // убираем префикс
 			SingularTable: false,                             // use plural table name, table for `User` would be `users`

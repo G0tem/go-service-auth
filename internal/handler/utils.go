@@ -3,7 +3,6 @@ package handler
 import (
 	"errors"
 	"net/mail"
-	"strings"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -44,36 +43,15 @@ func validateEmail(email string) bool {
 	return err == nil
 }
 
-type SortDirection string
+// type SortDirection string
 
-const (
-	SortDirectionUnsorted SortDirection = ""
-	SortDirectionAsc      SortDirection = "ASC"
-	SortDirectionDesc     SortDirection = "DESC"
-)
+// const (
+// 	SortDirectionUnsorted SortDirection = ""
+// 	SortDirectionAsc      SortDirection = "ASC"
+// 	SortDirectionDesc     SortDirection = "DESC"
+// )
 
-type SortByField struct {
-	FieldName     string
-	SortDirection SortDirection
-}
-
-func parseSortString(queryParam string) []SortByField {
-	result := make([]SortByField, 0, 10)
-	for _, sortByField := range strings.Split(queryParam, ",") {
-		if len(sortByField) == 0 {
-			continue
-		}
-		sortDirection := SortDirectionUnsorted
-		if sortByField[0] == "+"[0] {
-			sortDirection = SortDirectionAsc
-		}
-		if sortByField[0] == "-"[0] {
-			sortDirection = SortDirectionDesc
-		}
-		result = append(result, SortByField{
-			FieldName:     sortByField[1:],
-			SortDirection: sortDirection,
-		})
-	}
-	return result
-}
+// type SortByField struct {
+// 	FieldName     string
+// 	SortDirection SortDirection
+// }
