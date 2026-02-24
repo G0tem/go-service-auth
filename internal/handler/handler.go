@@ -17,26 +17,24 @@ import (
 )
 
 type Handler struct {
-	rbac        *rbac.RBACLayer
-	db          *gorm.DB
-	cfg         *config.Config
-	userService UserService
-	redis       *redis.Client
+	rbac  *rbac.RBACLayer
+	db    *gorm.DB
+	cfg   *config.Config
+	redis *redis.Client
 }
 
 func NewHandler(db *gorm.DB, rbac *rbac.RBACLayer, cfg *config.Config) *Handler {
 	redisClient := redis.NewClient(&redis.Options{
-		Addr: cfg.RedisAddr, // Адрес Redis (например, "localhost:6379")
-		DB:   cfg.RedisDB,   // Номер базы данных Redis
+		Addr: cfg.RedisAddr,
+		DB:   cfg.RedisDB,
 	})
 
 	log.Println("Successfully connected to Redis")
 	return &Handler{
-		rbac:        rbac,
-		db:          db,
-		cfg:         cfg,
-		userService: NewHTTPUserService(cfg.UserServiceBaseUrl),
-		redis:       redisClient,
+		rbac:  rbac,
+		db:    db,
+		cfg:   cfg,
+		redis: redisClient,
 	}
 }
 

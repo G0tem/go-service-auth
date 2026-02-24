@@ -2,6 +2,7 @@ package internal
 
 import "fmt"
 
+// для RBAC
 const (
 	ErrAccessNotPermitted        = "access not permitted"
 	ErrUserNotFound              = "user not found"
