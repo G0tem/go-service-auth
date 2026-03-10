@@ -9,7 +9,7 @@ services:
     env_file:
       - .env
     networks:
-      - go-servise-base_local-network
+      - local-network
     ports:
       - "${HTTP_PORT:-8002}:${HTTP_PORT:-8002}"
       - "${GRPC_PORT:-50051}:${GRPC_PORT:-50051}"
@@ -22,5 +22,5 @@ services:
       - "traefik.http.services.auth-service.loadbalancer.server.port=8002"
 
 networks:
-  go-servise-base_local-network:
+  local-network:
     external: true

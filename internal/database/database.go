@@ -15,7 +15,7 @@ import (
 )
 
 // Connect function
-func Connect(cfg config.Config) (*gorm.DB, error) {
+func Connect(cfg *config.Config) (*gorm.DB, error) {
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=UTC",
 		cfg.PostgresHost,
@@ -43,9 +43,6 @@ func Connect(cfg config.Config) (*gorm.DB, error) {
 	log.Info().Msg("running migrations")
 	err = db.AutoMigrate(
 		&model.User{},
-		&model.UserRole{},
-		&model.UserPermission{},
-		&model.UserRolePermission{},
 	)
 	if err != nil {
 		log.Error().Msgf("failed run auto-migrations. %v\n", err)

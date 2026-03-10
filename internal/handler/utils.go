@@ -42,16 +42,3 @@ func validateEmail(email string) bool {
 	_, err := mail.ParseAddress(email)
 	return err == nil
 }
-
-// type SortDirection string
-
-// const (
-// 	SortDirectionUnsorted SortDirection = ""
-// 	SortDirectionAsc      SortDirection = "ASC"
-// 	SortDirectionDesc     SortDirection = "DESC"
-// )
-
-// type SortByField struct {
-// 	FieldName     string
-// 	SortDirection SortDirection
-// }
