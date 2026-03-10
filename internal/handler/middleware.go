@@ -4,6 +4,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/G0tem/go-service-auth/internal/model"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -66,12 +67,11 @@ func JWTMiddleware(secret string) fiber.Handler {
 		}
 
 		claims := &JwtClaims{
-			UserID:      asString(claimsMap["user_id"]),
-			Username:    asString(claimsMap["username"]),
-			Email:       asString(claimsMap["email"]),
-			Role:        asString(claimsMap["role"]),
-			Permissions: asStringSlice(claimsMap["permissions"]),
-			Exp:         expTime,
+			UserID:   asString(claimsMap["user_id"]),
+			Username: asString(claimsMap["username"]),
+			Email:    asString(claimsMap["email"]),
+			Role:     asString(claimsMap["role"]),
+			Exp:      expTime,
 		}
 
 		c.Locals("claims", claims)
@@ -87,21 +87,19 @@ func asString(v any) string {
 	return s
 }
 
-func asStringSlice(v any) []string {
-	if v == nil {
-		return nil
+func (h *Handler) GetJWT(user *model.User) (string, error) {
+	// Create the Claims
+	claims := jwt.MapClaims{
+		"user_id":  user.ID.String(),
+		"username": user.Username,
+		"email":    user.Email,
+		"role":     user.Role.Name,
+		"exp":      time.Now().Add(time.Hour * 72).Unix(),
 	}
-	if list, ok := v.([]string); ok {
-		return list
-	}
-	if list, ok := v.([]any); ok {
-		result := make([]string, 0, len(list))
-		for _, it := range list {
-			if s, ok := it.(string); ok {
-				result = append(result, s)
-			}
-		}
-		return result
-	}
-	return nil
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	t, err := token.SignedString([]byte(h.cfg.SecretKey))
+
+	return t, err
 }

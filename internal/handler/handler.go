@@ -1,40 +1,25 @@
 package handler
 
 import (
-	"fmt"
-	"log"
-	"time"
-
-	"github.com/G0tem/go-service-auth/internal"
 	"github.com/G0tem/go-service-auth/internal/config"
-	"github.com/G0tem/go-service-auth/internal/handler/rbac"
 	"github.com/G0tem/go-service-auth/internal/model"
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
-	"github.com/golang-jwt/jwt/v5"
 	fiberSwagger "github.com/swaggo/fiber-swagger"
 	"gorm.io/gorm"
 )
 
 type Handler struct {
-	rbac  *rbac.RBACLayer
 	db    *gorm.DB
 	cfg   *config.Config
 	redis *redis.Client
 }
 
-func NewHandler(db *gorm.DB, rbac *rbac.RBACLayer, cfg *config.Config) *Handler {
-	redisClient := redis.NewClient(&redis.Options{
-		Addr: cfg.RedisAddr,
-		DB:   cfg.RedisDB,
-	})
-
-	log.Println("Successfully connected to Redis")
+func NewHandler(db *gorm.DB, rds *redis.Client, cfg *config.Config) *Handler {
 	return &Handler{
-		rbac:  rbac,
 		db:    db,
 		cfg:   cfg,
-		redis: redisClient,
+		redis: rds,
 	}
 }
 
@@ -66,40 +51,4 @@ func (h *Handler) ResetPassword(user *model.User, newPasswordHash string) error 
 		return tx.Error
 	}
 	return nil
-}
-
-func (h *Handler) GetJWT(user *model.User) (string, error) {
-	// Create the Claims
-	claims := jwt.MapClaims{
-		"user_id":     user.ID.String(),
-		"username":    user.Username,
-		"email":       user.Email,
-		"role":        user.Role.Name,
-		"permissions": h.GetPermissions(user),
-		"exp":         time.Now().Add(time.Hour * 72).Unix(),
-	}
-
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-	t, err := token.SignedString([]byte(h.cfg.SecretKey))
-
-	return t, err
-}
-
-func (h *Handler) GetPermissions(user *model.User) []string {
-	permissions, err := h.rbac.GetRolePermissions(user.Role.Name)
-	if err != nil {
-		return []string{}
-	}
-	return internal.Mapping(permissions, func(x model.UserPermission) string {
-		return fmt.Sprintf("%v:%v", x.Model, x.Action)
-	})
-}
-
-func (h *Handler) GetPublicUrl() string {
-	return h.cfg.PublicUrl
-}
-
-func (h *Handler) GetPublicErrorUrl() string {
-	return h.cfg.PublicErrorUrl
 }
